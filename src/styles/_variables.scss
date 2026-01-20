@@ -1,0 +1,13 @@
+$primary: #5FB3A2;
+$primary-dark: #3F8F7D;
+$primary-light: #EAF6F3;
+$background: #F9FBFA;
+$border: #E1E7E5;
+$text: #2F3A3A;
+$accent: #F4C95D;
+
+// Text variants (pre-calculated to avoid lighten() deprecation)
+$text-light: #5a6868;    // text + 15%
+$text-lighter: #6b7979;  // text + 20%
+$text-muted: #7c8a8a;    // text + 25%
+$text-subtle: #495454;   // text + 10%

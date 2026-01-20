@@ -1,0 +1,361 @@
+---
+const projects = [
+  {
+    id: 'restaurant-le-gourmet',
+    title: 'Restaurant Le Gourmet',
+    category: 'Restauration',
+    description: 'Site vitrine élégant pour un restaurant gastronomique avec réservation en ligne.',
+    image: '/images/projects/restaurant.jpg',
+  },
+  {
+    id: 'cabinet-dr-martin',
+    title: 'Cabinet Dr. Martin',
+    category: 'Santé',
+    description: 'Présentation des services médicaux et prise de rendez-vous simplifiée.',
+    image: '/images/projects/cabinet.jpg',
+  },
+  {
+    id: 'boutique-elegance',
+    title: 'Boutique Élégance',
+    category: 'Commerce',
+    description: 'Vitrine digitale pour une boutique de prêt-à-porter haut de gamme.',
+    image: '/images/projects/boutique.jpg',
+  },
+  {
+    id: 'artisan-boulanger',
+    title: 'Artisan Boulanger',
+    category: 'Artisanat',
+    description: 'Mise en valeur du savoir-faire artisanal et des produits frais du jour.',
+    image: '/images/projects/boulanger.jpg',
+  },
+];
+---
+
+<section id="portfolio" class="portfolio">
+  <div class="portfolio__container">
+    <div class="portfolio__header">
+      <h2 class="portfolio__title">Mes réalisations</h2>
+      <p class="portfolio__intro">
+        Découvrez quelques projets sur lesquels j'ai eu le plaisir de travailler.
+      </p>
+    </div>
+
+    <div class="portfolio__carousel">
+      <div class="portfolio__track">
+        {projects.map((project) => (
+          <article class="project-card" data-project={project.id}>
+            <div class="project-card__image">
+              <div class="project-card__placeholder" style={`background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);`}>
+                <span class="project-card__placeholder-text">{project.title.charAt(0)}</span>
+              </div>
+            </div>
+            <div class="project-card__content">
+              <span class="project-card__category">{project.category}</span>
+              <h3 class="project-card__title">{project.title}</h3>
+              <p class="project-card__description">{project.description}</p>
+              <span class="project-card__link">
+                Voir le projet
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div class="portfolio__controls">
+      <button class="portfolio__arrow portfolio__arrow--prev" aria-label="Projet précédent">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <div class="portfolio__dots">
+        {projects.map((_, index) => (
+          <button
+            class={`portfolio__dot ${index === 0 ? 'is-active' : ''}`}
+            aria-label={`Aller au projet ${index + 1}`}
+            data-index={index}
+          />
+        ))}
+      </div>
+      <button class="portfolio__arrow portfolio__arrow--next" aria-label="Projet suivant">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+
+  .portfolio {
+    @include section;
+    background: white;
+    --primary: #{$primary};
+    --primary-dark: #{$primary-dark};
+
+    &__container {
+      @include container;
+    }
+
+    &__header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 4rem;
+    }
+
+    &__title {
+      margin-bottom: 1rem;
+    }
+
+    &__intro {
+      color: $text-light;
+      font-size: 1.125rem;
+    }
+
+    &__carousel {
+      overflow: hidden;
+      margin: 0 -1.5rem;
+      padding: 0 1.5rem;
+
+      @include lg {
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    &__track {
+      display: flex;
+      gap: 1.5rem;
+      transition: transform 0.5s ease;
+
+      @include lg {
+        gap: 2rem;
+      }
+    }
+
+    &__controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    &__arrow {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid $border;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      @include transition;
+
+      svg {
+        width: 20px;
+        height: 20px;
+        color: $text;
+      }
+
+      &:hover {
+        border-color: $primary;
+        background: $primary-light;
+
+        svg {
+          color: $primary;
+        }
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+
+        &:hover {
+          border-color: $border;
+          background: white;
+
+          svg {
+            color: $text;
+          }
+        }
+      }
+    }
+
+    &__dots {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    &__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: none;
+      background: $border;
+      cursor: pointer;
+      @include transition(background);
+
+      &:hover,
+      &.is-active {
+        background: $primary;
+      }
+    }
+  }
+
+  .project-card {
+    flex: 0 0 100%;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid $border;
+    @include shadow-soft;
+    @include transition;
+    cursor: pointer;
+
+    @include md {
+      flex: 0 0 calc(50% - 1rem);
+    }
+
+    @include lg {
+      flex: 0 0 calc(50% - 1rem);
+    }
+
+    &:hover {
+      @include shadow-hover;
+      transform: translateY(-4px);
+
+      .project-card__link {
+        color: $primary;
+
+        svg {
+          transform: translateX(4px);
+        }
+      }
+    }
+
+    &__image {
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+    }
+
+    &__placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__placeholder-text {
+      font-size: 4rem;
+      font-weight: 700;
+      color: rgba(white, 0.3);
+    }
+
+    &__content {
+      padding: 1.5rem;
+
+      @include md {
+        padding: 2rem;
+      }
+    }
+
+    &__category {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: $primary;
+      background: $primary-light;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
+    &__title {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    &__description {
+      color: $text-lighter;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    &__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      color: $text;
+      @include transition;
+
+      svg {
+        width: 16px;
+        height: 16px;
+        @include transition(transform);
+      }
+    }
+  }
+</style>
+
+<script>
+  const track = document.querySelector('.portfolio__track') as HTMLElement;
+  const cards = document.querySelectorAll('.project-card');
+  const prevBtn = document.querySelector('.portfolio__arrow--prev') as HTMLButtonElement;
+  const nextBtn = document.querySelector('.portfolio__arrow--next') as HTMLButtonElement;
+  const dots = document.querySelectorAll('.portfolio__dot');
+
+  let currentIndex = 0;
+  let itemsPerView = 1;
+
+  function updateItemsPerView() {
+    if (window.innerWidth >= 768) {
+      itemsPerView = 2;
+    } else {
+      itemsPerView = 1;
+    }
+  }
+
+  function updateCarousel() {
+    const cardWidth = (cards[0] as HTMLElement).offsetWidth;
+    const gap = window.innerWidth >= 1024 ? 32 : 24;
+    track.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
+
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('is-active', index === currentIndex);
+    });
+
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex >= cards.length - itemsPerView;
+  }
+
+  function goTo(index: number) {
+    currentIndex = Math.max(0, Math.min(index, cards.length - itemsPerView));
+    updateCarousel();
+  }
+
+  prevBtn?.addEventListener('click', () => goTo(currentIndex - 1));
+  nextBtn?.addEventListener('click', () => goTo(currentIndex + 1));
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => goTo(index));
+  });
+
+  window.addEventListener('resize', () => {
+    updateItemsPerView();
+    updateCarousel();
+  });
+
+  updateItemsPerView();
+  updateCarousel();
+</script>

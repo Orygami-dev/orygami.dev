@@ -1,0 +1,156 @@
+---
+import logo from '../assets/logo.png';
+---
+
+<section class="hero">
+  <div class="hero__container">
+    <div class="hero__content">
+      <h1 class="hero__title">
+        Votre site web vitrine,
+        <span class="hero__title-accent">sur-mesure</span>
+      </h1>
+      <p class="hero__subtitle">
+        Je crée des sites web modernes et performants pour les PME qui veulent se démarquer en ligne. Design soigné, responsive et optimisé pour le référencement.
+      </p>
+      <div class="hero__actions">
+        <a href="#contact" class="hero__cta-primary">
+          Discutons de votre projet
+        </a>
+        <a href="#portfolio" class="hero__cta-secondary">
+          Voir mes réalisations
+        </a>
+      </div>
+    </div>
+    <div class="hero__visual">
+      <img src={logo.src} alt="Orygami.dev" class="hero__logo" />
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 2rem;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, $primary-light 0%, $background 100%);
+
+    &__container {
+      @include container;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      align-items: center;
+
+      @include md {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    &__content {
+      text-align: center;
+
+      @include lg {
+        text-align: left;
+      }
+    }
+
+    &__title {
+      font-size: 2.25rem;
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+
+      @include md {
+        font-size: 3rem;
+      }
+
+      @include lg {
+        font-size: 3.5rem;
+      }
+    }
+
+    &__title-accent {
+      color: $primary;
+      display: block;
+    }
+
+    &__subtitle {
+      font-size: 1.125rem;
+      color: $text-light;
+      max-width: 540px;
+      margin: 0 auto 2rem;
+
+      @include lg {
+        margin: 0 0 2rem;
+        font-size: 1.25rem;
+      }
+    }
+
+    &__actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+
+      @include sm {
+        flex-direction: row;
+        justify-content: center;
+      }
+
+      @include lg {
+        justify-content: flex-start;
+      }
+    }
+
+    &__cta-primary {
+      @include button-primary;
+      width: 100%;
+
+      @include sm {
+        width: auto;
+      }
+    }
+
+    &__cta-secondary {
+      @include button-secondary;
+      width: 100%;
+
+      @include sm {
+        width: auto;
+      }
+    }
+
+    &__visual {
+      display: none;
+      position: relative;
+      height: 400px;
+
+      @include md {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &__logo {
+      width: 400px;
+      height: auto;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 20px 40px rgba(47, 58, 58, 0.12));
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+</style>

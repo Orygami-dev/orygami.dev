@@ -1,0 +1,132 @@
+---
+
+---
+
+<section id="contact" class="contact-cta">
+  <div class="contact-cta__container">
+    <div class="contact-cta__content">
+      <h2 class="contact-cta__title">Prêt à donner vie à votre projet ?</h2>
+      <p class="contact-cta__text">
+        Discutons ensemble de vos besoins et de la meilleure façon de vous accompagner dans votre présence en ligne.
+      </p>
+      <div class="contact-cta__actions">
+        <a href="mailto:contact@orygami.fr" class="contact-cta__button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+          Me contacter par email
+        </a>
+        <span class="contact-cta__email">contact@orygami.fr</span>
+      </div>
+    </div>
+    <div class="contact-cta__decoration">
+      <div class="contact-cta__shape contact-cta__shape--1"></div>
+      <div class="contact-cta__shape contact-cta__shape--2"></div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use '../styles/variables' as *;
+  @use '../styles/mixins' as *;
+
+  .contact-cta {
+    @include section;
+    background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+    position: relative;
+    overflow: hidden;
+
+    &__container {
+      @include container;
+      position: relative;
+      z-index: 1;
+    }
+
+    &__content {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    &__title {
+      color: white;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+
+      @include md {
+        font-size: 2.5rem;
+      }
+    }
+
+    &__text {
+      color: rgba(white, 0.9);
+      font-size: 1.125rem;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    &__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    &__button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: white;
+      color: $primary-dark;
+      padding: 1rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1.0625rem;
+      text-decoration: none;
+      @include transition;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        background: $primary-light;
+        transform: translateY(-2px);
+        @include shadow-hover;
+      }
+    }
+
+    &__email {
+      color: rgba(white, 0.7);
+      font-size: 0.9rem;
+    }
+
+    &__decoration {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    &__shape {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(white, 0.05);
+
+      &--1 {
+        width: 400px;
+        height: 400px;
+        top: -200px;
+        right: -100px;
+      }
+
+      &--2 {
+        width: 300px;
+        height: 300px;
+        bottom: -150px;
+        left: -100px;
+      }
+    }
+  }
+</style>

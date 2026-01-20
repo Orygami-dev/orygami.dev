@@ -1,0 +1,121 @@
+@use 'variables' as *;
+
+// Breakpoints
+$breakpoint-sm: 480px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 1024px;
+$breakpoint-xl: 1280px;
+
+// Media queries
+@mixin sm {
+  @media (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin xl {
+  @media (min-width: $breakpoint-xl) {
+    @content;
+  }
+}
+
+// Container
+@mixin container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  @include lg {
+    padding: 0 2rem;
+  }
+}
+
+// Section spacing
+@mixin section {
+  padding: 4rem 0;
+
+  @include md {
+    padding: 6rem 0;
+  }
+
+  @include lg {
+    padding: 8rem 0;
+  }
+}
+
+// Subtle shadow (flat organic style)
+@mixin shadow-soft {
+  box-shadow: 0 4px 20px rgba(47, 58, 58, 0.06);
+}
+
+@mixin shadow-hover {
+  box-shadow: 0 8px 30px rgba(47, 58, 58, 0.1);
+}
+
+// Smooth transition
+@mixin transition($properties: all) {
+  transition: $properties 0.3s ease;
+}
+
+// Card style
+@mixin card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid $border;
+  @include shadow-soft;
+  @include transition;
+
+  &:hover {
+    @include shadow-hover;
+  }
+}
+
+// Button base
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  @include transition;
+}
+
+@mixin button-primary {
+  @include button-base;
+  background: $primary;
+  color: white;
+
+  &:hover {
+    background: $primary-dark;
+  }
+}
+
+@mixin button-secondary {
+  @include button-base;
+  background: transparent;
+  color: $primary;
+  border: 2px solid $primary;
+
+  &:hover {
+    background: $primary-light;
+  }
+}
