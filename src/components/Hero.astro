@@ -1,5 +1,5 @@
 ---
-import logo from '../assets/logo.png';
+import OrigamiSVG from './OrigamiSVG.astro';
 ---
 
 <section class="hero">
@@ -22,7 +22,7 @@ import logo from '../assets/logo.png';
       </div>
     </div>
     <div class="hero__visual">
-      <img src={logo.src} alt="Orygami.dev" class="hero__logo" />
+      <OrigamiSVG />
     </div>
   </div>
 </section>
@@ -135,22 +135,6 @@ import logo from '../assets/logo.png';
         align-items: center;
         justify-content: center;
       }
-    }
-
-    &__logo {
-      width: 400px;
-      height: auto;
-      animation: float 4s ease-in-out infinite;
-      filter: drop-shadow(0 20px 40px rgba(47, 58, 58, 0.12));
-    }
-  }
-
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-12px);
     }
   }
 </style>
