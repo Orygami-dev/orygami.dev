@@ -1,0 +1,335 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Footer from '../../components/Footer.astro';
+import { projects } from '../../data/projects';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
+
+export const getStaticPaths = (() => {
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project },
+  }));
+}) satisfies GetStaticPaths;
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { project } = Astro.props as Props;
+---
+
+<Layout title={`${project.title} | Orygami.dev`} description={project.description}>
+  <main class="project-detail">
+    <div class="project-detail__container">
+      <a href="/#portfolio" class="project-detail__back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Retour aux réalisations
+      </a>
+
+      <div class="project-detail__header">
+        <span class="project-detail__category">{project.category}</span>
+        <h1 class="project-detail__title">{project.title}</h1>
+      </div>
+
+      <div class="screenshot-carousel">
+        <div class="screenshot-carousel__viewport">
+          <div class="screenshot-carousel__track">
+            {project.screenshots.map((src, i) => (
+              <div class="screenshot-carousel__slide">
+                <div class="screenshot-carousel__placeholder">
+                  <span class="screenshot-carousel__placeholder-text">{project.title.charAt(0)}{i + 1}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        {project.screenshots.length > 1 && (
+          <div class="screenshot-carousel__controls">
+            <button class="screenshot-carousel__arrow screenshot-carousel__arrow--prev" aria-label="Capture précédente">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <div class="screenshot-carousel__dots">
+              {project.screenshots.map((_, i) => (
+                <button
+                  class={`screenshot-carousel__dot ${i === 0 ? 'is-active' : ''}`}
+                  aria-label={`Capture ${i + 1}`}
+                  data-index={i}
+                />
+              ))}
+            </div>
+            <button class="screenshot-carousel__arrow screenshot-carousel__arrow--next" aria-label="Capture suivante">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div class="project-detail__body">
+        <section class="project-detail__mission">
+          <h2>La mission</h2>
+          <p>{project.longDescription}</p>
+        </section>
+
+        <div class="project-detail__actions">
+          <a href={project.siteUrl} target="_blank" rel="noopener noreferrer" class="project-detail__site-link">
+            Voir le site
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style lang="scss">
+  @use '../../styles/variables' as *;
+  @use '../../styles/mixins' as *;
+
+  .project-detail {
+    @include section;
+    background: $background;
+
+    &__container {
+      @include container;
+      max-width: 800px;
+    }
+
+    &__back {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: $text-light;
+      text-decoration: none;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      @include transition;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        color: $primary;
+      }
+    }
+
+    &__header {
+      margin-bottom: 2rem;
+    }
+
+    &__category {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: $primary;
+      background: $primary-light;
+      padding: 0.3rem 0.85rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+    }
+
+    &__title {
+      font-size: 2rem;
+      line-height: 1.2;
+
+      @include md {
+        font-size: 2.5rem;
+      }
+    }
+
+    &__body {
+      background: white;
+      border-radius: 16px;
+      border: 1px solid $border;
+      padding: 2rem;
+      @include shadow-soft;
+
+      @include md {
+        padding: 3rem;
+      }
+    }
+
+    &__mission {
+      margin-bottom: 2rem;
+
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      p {
+        color: $text-light;
+        line-height: 1.8;
+        font-size: 1.05rem;
+      }
+    }
+
+    &__actions {
+      padding-top: 2rem;
+      border-top: 1px solid $border;
+    }
+
+    &__site-link {
+      @include button-primary;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  .screenshot-carousel {
+    margin-bottom: 3rem;
+
+    &__viewport {
+      border-radius: 16px;
+      overflow: hidden;
+      @include shadow-soft;
+    }
+
+    &__track {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    &__slide {
+      flex: 0 0 100%;
+      aspect-ratio: 16 / 9;
+    }
+
+    &__placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
+    }
+
+    &__placeholder-text {
+      font-size: 4rem;
+      font-weight: 700;
+      color: rgba(white, 0.3);
+
+      @include md {
+        font-size: 6rem;
+      }
+    }
+
+    &__controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    &__arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid $border;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      @include transition;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        color: $text;
+      }
+
+      &:hover {
+        border-color: $primary;
+        background: $primary-light;
+
+        svg {
+          color: $primary;
+        }
+      }
+
+      &:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+
+        &:hover {
+          border-color: $border;
+          background: white;
+
+          svg {
+            color: $text;
+          }
+        }
+      }
+    }
+
+    &__dots {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    &__dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: none;
+      background: $border;
+      cursor: pointer;
+      @include transition(background);
+
+      &:hover,
+      &.is-active {
+        background: $primary;
+      }
+    }
+  }
+</style>
+
+<script>
+  const track = document.querySelector('.screenshot-carousel__track') as HTMLElement;
+  const slides = document.querySelectorAll('.screenshot-carousel__slide');
+  const prevBtn = document.querySelector('.screenshot-carousel__arrow--prev') as HTMLButtonElement;
+  const nextBtn = document.querySelector('.screenshot-carousel__arrow--next') as HTMLButtonElement;
+  const dots = document.querySelectorAll('.screenshot-carousel__dot');
+
+  if (track && slides.length > 1) {
+    let current = 0;
+
+    function update() {
+      track.style.transform = `translateX(-${current * 100}%)`;
+      dots.forEach((dot, i) => dot.classList.toggle('is-active', i === current));
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === slides.length - 1;
+    }
+
+    prevBtn?.addEventListener('click', () => {
+      current = Math.max(0, current - 1);
+      update();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      current = Math.min(slides.length - 1, current + 1);
+      update();
+    });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        current = i;
+        update();
+      });
+    });
+
+    update();
+  }
+</script>

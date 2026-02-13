@@ -3,7 +3,9 @@
     "allow": [
       "Bash(yarn add:*)",
       "Bash(yarn build:*)",
-      "Bash(yarn dev)"
+      "Bash(yarn dev)",
+      "Bash(curl:*)",
+      "Bash(npx playwright:*)"
     ],
     "deny": [],
     "ask": []

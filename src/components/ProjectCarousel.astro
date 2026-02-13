@@ -1,34 +1,5 @@
 ---
-const projects = [
-  {
-    id: 'restaurant-le-gourmet',
-    title: 'Restaurant Le Gourmet',
-    category: 'Restauration',
-    description: 'Site vitrine élégant pour un restaurant gastronomique avec réservation en ligne.',
-    image: '/images/projects/restaurant.jpg',
-  },
-  {
-    id: 'cabinet-dr-martin',
-    title: 'Cabinet Dr. Martin',
-    category: 'Santé',
-    description: 'Présentation des services médicaux et prise de rendez-vous simplifiée.',
-    image: '/images/projects/cabinet.jpg',
-  },
-  {
-    id: 'boutique-elegance',
-    title: 'Boutique Élégance',
-    category: 'Commerce',
-    description: 'Vitrine digitale pour une boutique de prêt-à-porter haut de gamme.',
-    image: '/images/projects/boutique.jpg',
-  },
-  {
-    id: 'artisan-boulanger',
-    title: 'Artisan Boulanger',
-    category: 'Artisanat',
-    description: 'Mise en valeur du savoir-faire artisanal et des produits frais du jour.',
-    image: '/images/projects/boulanger.jpg',
-  },
-];
+import { projects } from '../data/projects';
 ---
 
 <section id="portfolio" class="portfolio">
@@ -43,24 +14,26 @@ const projects = [
     <div class="portfolio__carousel">
       <div class="portfolio__track">
         {projects.map((project) => (
-          <article class="project-card" data-project={project.id}>
-            <div class="project-card__image">
-              <div class="project-card__placeholder" style={`background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);`}>
-                <span class="project-card__placeholder-text">{project.title.charAt(0)}</span>
+          <a href={`/realisations/${project.id}`} class="project-card__link-wrapper" data-project={project.id}>
+            <article class="project-card">
+              <div class="project-card__image">
+                <div class="project-card__placeholder" style={`background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);`}>
+                  <span class="project-card__placeholder-text">{project.title.charAt(0)}</span>
+                </div>
               </div>
-            </div>
-            <div class="project-card__content">
-              <span class="project-card__category">{project.category}</span>
-              <h3 class="project-card__title">{project.title}</h3>
-              <p class="project-card__description">{project.description}</p>
-              <span class="project-card__link">
-                Voir le projet
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </span>
-            </div>
-          </article>
+              <div class="project-card__content">
+                <span class="project-card__category">{project.category}</span>
+                <h3 class="project-card__title">{project.title}</h3>
+                <p class="project-card__description">{project.description}</p>
+                <span class="project-card__cta">
+                  Voir le projet
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </span>
+              </div>
+            </article>
+          </a>
         ))}
       </div>
     </div>
@@ -210,15 +183,10 @@ const projects = [
     }
   }
 
-  .project-card {
+  .project-card__link-wrapper {
     flex: 0 0 100%;
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid $border;
-    @include shadow-soft;
-    @include transition;
-    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
 
     @include md {
       flex: 0 0 calc(50% - 1rem);
@@ -227,12 +195,23 @@ const projects = [
     @include lg {
       flex: 0 0 calc(50% - 1rem);
     }
+  }
+
+  .project-card {
+    height: 100%;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid $border;
+    @include shadow-soft;
+    @include transition;
+    cursor: pointer;
 
     &:hover {
       @include shadow-hover;
       transform: translateY(-4px);
 
-      .project-card__link {
+      .project-card__cta {
         color: $primary;
 
         svg {
@@ -291,7 +270,7 @@ const projects = [
       margin-bottom: 1rem;
     }
 
-    &__link {
+    &__cta {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -310,7 +289,7 @@ const projects = [
 
 <script>
   const track = document.querySelector('.portfolio__track') as HTMLElement;
-  const cards = document.querySelectorAll('.project-card');
+  const cards = document.querySelectorAll('.project-card__link-wrapper');
   const prevBtn = document.querySelector('.portfolio__arrow--prev') as HTMLButtonElement;
   const nextBtn = document.querySelector('.portfolio__arrow--next') as HTMLButtonElement;
   const dots = document.querySelectorAll('.portfolio__dot');

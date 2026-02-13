@@ -5,21 +5,18 @@ const testimonials = [
     role: 'Restauratrice',
     company: 'Le Gourmet',
     content: 'Un travail remarquable ! Mon nouveau site reflète parfaitement l\'ambiance de mon restaurant. Les réservations en ligne ont augmenté de 40% depuis la mise en ligne.',
-    avatar: 'M',
   },
   {
     name: 'Jean-Pierre Laurent',
     role: 'Médecin généraliste',
     company: 'Cabinet Médical du Parc',
     content: 'Très professionnel et à l\'écoute. Le site est clair, rassurant pour mes patients, et la prise de rendez-vous en ligne leur facilite vraiment la vie.',
-    avatar: 'J',
   },
   {
     name: 'Sophie Renard',
     role: 'Gérante',
     company: 'Boutique Élégance',
     content: 'Je suis ravie du résultat ! Le design est élégant et met parfaitement en valeur mes collections. Un vrai plus pour mon image de marque.',
-    avatar: 'S',
   },
 ];
 ---
@@ -43,9 +40,6 @@ const testimonials = [
           </div>
           <p class="testimonial-card__content">{testimonial.content}</p>
           <div class="testimonial-card__author">
-            <div class="testimonial-card__avatar">
-              {testimonial.avatar}
-            </div>
             <div class="testimonial-card__info">
               <span class="testimonial-card__name">{testimonial.name}</span>
               <span class="testimonial-card__role">{testimonial.role}, {testimonial.company}</span>
@@ -136,19 +130,6 @@ const testimonials = [
       display: flex;
       align-items: center;
       gap: 1rem;
-    }
-
-    &__avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 600;
-      font-size: 1.125rem;
     }
 
     &__info {
