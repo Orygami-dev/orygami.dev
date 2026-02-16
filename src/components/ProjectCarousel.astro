@@ -4,6 +4,8 @@ import { projects } from '../data/projects';
 
 <section id="portfolio" class="portfolio">
   <div class="portfolio__container">
+    <div class="portfolio__tape portfolio__tape--top-left"></div>
+    <div class="portfolio__tape portfolio__tape--bottom-right"></div>
     <div class="portfolio__header">
       <h2 class="portfolio__title">Mes réalisations</h2>
       <p class="portfolio__intro">
@@ -68,12 +70,52 @@ import { projects } from '../data/projects';
 
   .portfolio {
     @include section;
-    background: white;
+    background: transparent;
     --primary: #{$primary};
     --primary-dark: #{$primary-dark};
 
     &__container {
       @include container;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(47, 58, 58, 0.08);
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+      position: relative;
+      @include lg {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+    }
+
+    &__tape {
+      position: absolute;
+      width: 120px;
+      height: 32px;
+      z-index: 2;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 30%,
+        transparent 70%,
+        rgba(255, 255, 255, 0.1) 100%
+      ),
+      rgba($accent, 0.3);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-bottom: 1px solid rgba($accent, 0.15);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+      &--top-left {
+        top: -12px;
+        left: 28px;
+        transform: rotate(-12deg);
+      }
+
+      &--bottom-right {
+        bottom: -12px;
+        right: 28px;
+        transform: rotate(-18deg);
+      }
     }
 
     &__header {
@@ -83,7 +125,13 @@ import { projects } from '../data/projects';
     }
 
     &__title {
+      font-family: 'Caveat', cursive;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
+
+      @include md {
+        font-size: 3rem;
+      }
     }
 
     &__intro {
@@ -195,21 +243,28 @@ import { projects } from '../data/projects';
     @include lg {
       flex: 0 0 calc(50% - 1rem);
     }
+
+    &:nth-child(odd) .project-card {
+      transform: rotate(-0.5deg);
+    }
+
+    &:nth-child(even) .project-card {
+      transform: rotate(0.8deg);
+    }
   }
 
   .project-card {
     height: 100%;
-    background: white;
-    border-radius: 16px;
+    background: #FFFDF7;
+    border-radius: 4px;
     overflow: hidden;
-    border: 1px solid $border;
-    @include shadow-soft;
-    @include transition;
+    border: none;
+    box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    transition: box-shadow 0.3s ease;
 
     &:hover {
-      @include shadow-hover;
-      transform: translateY(-4px);
+      box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.14);
 
       .project-card__cta {
         color: $primary;
@@ -221,7 +276,7 @@ import { projects } from '../data/projects';
     }
 
     &__image {
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 16 / 7;
       overflow: hidden;
     }
 
@@ -234,6 +289,7 @@ import { projects } from '../data/projects';
     }
 
     &__placeholder-text {
+      font-family: 'Caveat', cursive;
       font-size: 4rem;
       font-weight: 700;
       color: rgba(white, 0.3);
@@ -243,29 +299,33 @@ import { projects } from '../data/projects';
       padding: 1.5rem;
 
       @include md {
-        padding: 2rem;
+        padding: 1.75rem;
       }
     }
 
     &__category {
       display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 500;
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: $primary;
-      background: $primary-light;
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
+      background: none;
+      border: 2px solid $primary;
+      border-radius: 2px;
+      padding: 0.1rem 0.6rem;
       margin-bottom: 1rem;
+      transform: rotate(-2deg);
     }
 
     &__title {
-      font-size: 1.25rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
       margin-bottom: 0.5rem;
     }
 
     &__description {
-      color: $text-lighter;
-      font-size: 0.95rem;
+      color: $text-light;
+      font-size: 0.9rem;
       line-height: 1.6;
       margin-bottom: 1rem;
     }
@@ -274,14 +334,16 @@ import { projects } from '../data/projects';
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
-      font-weight: 500;
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: $text;
-      @include transition;
+      transition: color 0.3s ease;
 
       svg {
         width: 16px;
         height: 16px;
-        @include transition(transform);
+        transition: transform 0.3s ease;
       }
     }
   }

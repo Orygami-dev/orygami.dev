@@ -3,20 +3,26 @@ const reasons = [
   {
     title: 'Écoute attentive',
     description: 'Je prends le temps de comprendre votre activité, vos valeurs et vos objectifs pour créer un site qui vous ressemble.',
+    color: '#D4EFEA',
   },
   {
     title: 'Design soigné',
     description: 'Chaque détail compte. Je conçois des interfaces élégantes et intuitives qui inspirent confiance à vos visiteurs.',
+    color: '#FDF3D7',
   },
   {
     title: 'Approche personnalisée',
     description: 'Pas de templates génériques. Votre site est conçu sur-mesure pour répondre précisément à vos besoins.',
+    color: '#E6F4F0',
   },
   {
     title: 'Accompagnement durable',
     description: 'Je reste disponible après la livraison pour vous accompagner dans l\'évolution de votre présence en ligne.',
+    color: '#FEF0D3',
   },
 ];
+
+const rotations = ['1deg', '-1.5deg', '0.8deg', '-1deg'];
 ---
 
 <section id="pourquoi" class="why-me">
@@ -30,7 +36,19 @@ const reasons = [
 
     <div class="why-me__grid">
       {reasons.map((reason, index) => (
-        <div class="reason-card">
+        <div class="reason-card" style={`background: ${reason.color}; transform: rotate(${rotations[index]});`}>
+          <svg class="reason-card__pin" viewBox="0 0 32 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id={`pin-grad-${index}`} cx="40%" cy="35%" r="50%">
+                <stop offset="0%" stop-color="#d4534a" />
+                <stop offset="60%" stop-color="#b03028" />
+                <stop offset="100%" stop-color="#8a2420" />
+              </radialGradient>
+            </defs>
+            <circle cx="16" cy="13" r="11" fill={`url(#pin-grad-${index})`} />
+            <ellipse cx="13" cy="9.5" rx="4.5" ry="3.5" fill="rgba(255,255,255,0.3)" />
+            <path d="M16 24 L15 44 Q16 48 17 44 L16 24Z" fill="#aaa" />
+          </svg>
           <span class="reason-card__number">{String(index + 1).padStart(2, '0')}</span>
           <h3 class="reason-card__title">{reason.title}</h3>
           <p class="reason-card__description">{reason.description}</p>
@@ -46,7 +64,7 @@ const reasons = [
 
   .why-me {
     @include section;
-    background: $primary-light;
+    background: transparent;
 
     &__container {
       @include container;
@@ -59,7 +77,13 @@ const reasons = [
     }
 
     &__title {
+      font-family: 'Caveat', cursive;
+      font-size: 2.5rem;
       margin-bottom: 1rem;
+
+      @include md {
+        font-size: 3rem;
+      }
     }
 
     &__intro {
@@ -79,36 +103,58 @@ const reasons = [
   }
 
   .reason-card {
-    background: white;
-    border-radius: 16px;
-    padding: 2.5rem;
-    @include shadow-soft;
-    @include transition;
+    padding: 1.75rem 1.5rem;
+    padding-top: 2.25rem;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: box-shadow 0.3s ease;
 
     &:hover {
-      @include shadow-hover;
-      transform: translateY(-4px);
+      box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.14);
+    }
+
+    &__pin {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 24px;
+      height: 38px;
+      z-index: 3;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.04) 50%);
     }
 
     &__number {
       display: inline-block;
-      font-size: 0.875rem;
-      font-weight: 600;
+      font-family: 'Caveat', cursive;
+      font-size: 1.75rem;
+      font-weight: 700;
       color: $primary;
-      background: $primary-light;
-      padding: 0.375rem 0.75rem;
-      border-radius: 20px;
-      margin-bottom: 1.25rem;
+      margin-bottom: 0.75rem;
     }
 
     &__title {
-      font-size: 1.25rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
       margin-bottom: 0.75rem;
     }
 
     &__description {
-      color: $text-lighter;
-      line-height: 1.7;
+      font-size: 0.9rem;
+      color: $text-light;
+      line-height: 1.6;
     }
   }
 </style>
