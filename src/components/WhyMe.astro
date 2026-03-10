@@ -3,55 +3,37 @@ const reasons = [
   {
     title: 'Écoute attentive',
     description: 'Je prends le temps de comprendre votre activité, vos valeurs et vos objectifs pour créer un site qui vous ressemble.',
-    color: '#D4EFEA',
   },
   {
     title: 'Design soigné',
     description: 'Chaque détail compte. Je conçois des interfaces élégantes et intuitives qui inspirent confiance à vos visiteurs.',
-    color: '#FDF3D7',
   },
   {
     title: 'Approche personnalisée',
     description: 'Pas de templates génériques. Votre site est conçu sur-mesure pour répondre précisément à vos besoins.',
-    color: '#E6F4F0',
   },
   {
     title: 'Accompagnement durable',
     description: 'Je reste disponible après la livraison pour vous accompagner dans l\'évolution de votre présence en ligne.',
-    color: '#FEF0D3',
   },
 ];
-
-const rotations = ['1deg', '-1.5deg', '0.8deg', '-1deg'];
 ---
 
 <section id="pourquoi" class="why-me">
   <div class="why-me__container">
     <div class="why-me__header">
-      <h2 class="why-me__title">Pourquoi travailler avec moi ?</h2>
-      <p class="why-me__intro">
+      <h2 class="why-me__title" data-reveal="up">Pourquoi travailler avec moi ?</h2>
+      <p class="why-me__intro" data-reveal="up" data-reveal-delay="1">
         Au-delà des compétences techniques, c'est une collaboration basée sur l'écoute et la confiance que je vous propose.
       </p>
     </div>
 
     <div class="why-me__grid">
       {reasons.map((reason, index) => (
-        <div class="reason-card" style={`background: ${reason.color}; transform: rotate(${rotations[index]});`}>
-          <svg class="reason-card__pin" viewBox="0 0 32 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id={`pin-grad-${index}`} cx="40%" cy="35%" r="50%">
-                <stop offset="0%" stop-color="#d4534a" />
-                <stop offset="60%" stop-color="#b03028" />
-                <stop offset="100%" stop-color="#8a2420" />
-              </radialGradient>
-            </defs>
-            <circle cx="16" cy="13" r="11" fill={`url(#pin-grad-${index})`} />
-            <ellipse cx="13" cy="9.5" rx="4.5" ry="3.5" fill="rgba(255,255,255,0.3)" />
-            <path d="M16 24 L15 44 Q16 48 17 44 L16 24Z" fill="#aaa" />
-          </svg>
-          <span class="reason-card__number">{String(index + 1).padStart(2, '0')}</span>
-          <h3 class="reason-card__title">{reason.title}</h3>
-          <p class="reason-card__description">{reason.description}</p>
+        <div class="reason-item" data-reveal="fade" data-reveal-delay={String((index % 2) + 1)}>
+          <span class="reason-item__number">{String(index + 1).padStart(2, '0')}</span>
+          <h3 class="reason-item__title">{reason.title}</h3>
+          <p class="reason-item__description">{reason.description}</p>
         </div>
       ))}
     </div>
@@ -64,7 +46,9 @@ const rotations = ['1deg', '-1.5deg', '0.8deg', '-1deg'];
 
   .why-me {
     @include section;
-    background: transparent;
+    background:
+      radial-gradient(circle, rgba($primary, 0.08) 1px, transparent 1px) 0 0 / 24px 24px,
+      white;
 
     &__container {
       @include container;
@@ -94,61 +78,53 @@ const rotations = ['1deg', '-1.5deg', '0.8deg', '-1deg'];
     &__grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 2rem;
+      gap: 2.5rem;
 
       @include md {
         grid-template-columns: repeat(2, 1fr);
+        gap: 3rem 2.5rem;
       }
     }
   }
 
-  .reason-card {
-    padding: 1.75rem 1.5rem;
-    padding-top: 2.25rem;
-    border: none;
-    border-radius: 2px;
-    box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
-    transition: box-shadow 0.3s ease;
+  .reason-item {
+    text-align: left;
+    padding: 1.5rem;
 
-    &:hover {
-      box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.14);
+    &:nth-child(1) { transform: rotate(-1deg); }
+    &:nth-child(2) {
+      transform: rotate(0.5deg);
+      @include md { margin-top: 2rem; }
     }
-
-    &__pin {
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 24px;
-      height: 38px;
-      z-index: 3;
-      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+    &:nth-child(3) {
+      transform: rotate(-0.5deg);
+      @include md { margin-top: -1rem; }
     }
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      width: 20px;
-      height: 20px;
-      background: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.04) 50%);
-    }
+    &:nth-child(4) { transform: rotate(1deg); }
 
     &__number {
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
       font-family: 'Caveat', cursive;
-      font-size: 1.75rem;
+      font-size: 2.5rem;
       font-weight: 700;
       color: $primary;
-      margin-bottom: 0.75rem;
+      border: 2.5px solid $primary;
+      border-radius: 50%;
+      transform: rotate(-3deg);
+      margin-bottom: 1rem;
     }
 
     &__title {
       font-family: 'Caveat', cursive;
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       margin-bottom: 0.75rem;
+      text-decoration: underline wavy $primary;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1.5px;
     }
 
     &__description {

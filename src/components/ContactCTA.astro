@@ -1,15 +1,18 @@
 ---
-
+interface Props {
+  overlap?: boolean;
+}
+const { overlap = true } = Astro.props;
 ---
 
-<section id="contact" class="contact-cta">
+<section id="contact" class:list={['contact-cta', { 'contact-cta--no-overlap': !overlap }]}>
   <div class="contact-cta__container">
     <div class="contact-cta__content">
-      <h2 class="contact-cta__title">Prêt à donner vie à votre projet ?</h2>
-      <p class="contact-cta__text">
+      <h2 class="contact-cta__title" data-reveal="up">Prêt à donner vie à votre projet ?</h2>
+      <p class="contact-cta__text" data-reveal="up" data-reveal-delay="1">
         Discutons ensemble de vos besoins et de la meilleure façon de vous accompagner dans votre présence en ligne.
       </p>
-      <div class="contact-cta__actions">
+      <div class="contact-cta__actions" data-reveal="up" data-reveal-delay="2">
         <a href="mailto:contact@orygami.fr" class="contact-cta__button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
@@ -36,6 +39,15 @@
     background: linear-gradient(135deg, $primary 0%, $primary-dark 100%);
     position: relative;
     overflow: hidden;
+    margin-top: -8rem;
+    padding-top: 10rem;
+    @include lg { margin-top: -10rem; padding-top: 12rem; }
+
+    &--no-overlap {
+      margin-top: 0;
+      padding-top: 4rem;
+      @include lg { margin-top: 0; padding-top: 5rem; }
+    }
 
     &__container {
       @include container;

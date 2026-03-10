@@ -1,65 +1,51 @@
 ---
 import { projects } from '../data/projects';
+
+const rotations = ['-1.2deg', '0.8deg', '-0.6deg', '1.1deg'];
 ---
 
 <section id="portfolio" class="portfolio">
   <div class="portfolio__container">
-    <div class="portfolio__tape portfolio__tape--top-left"></div>
-    <div class="portfolio__tape portfolio__tape--bottom-right"></div>
     <div class="portfolio__header">
-      <h2 class="portfolio__title">Mes réalisations</h2>
-      <p class="portfolio__intro">
+      <h2 class="portfolio__title" data-reveal="up">Mes réalisations</h2>
+      <p class="portfolio__intro" data-reveal="up" data-reveal-delay="1">
         Découvrez quelques projets sur lesquels j'ai eu le plaisir de travailler.
       </p>
     </div>
 
-    <div class="portfolio__carousel">
-      <div class="portfolio__track">
-        {projects.map((project) => (
-          <a href={`/realisations/${project.id}`} class="project-card__link-wrapper" data-project={project.id}>
-            <article class="project-card">
-              <div class="project-card__image">
-                <div class="project-card__placeholder" style={`background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);`}>
-                  <span class="project-card__placeholder-text">{project.title.charAt(0)}</span>
+    <div class="portfolio__grid">
+      {projects.map((project, i) => (
+        <a
+          href={`/realisations/${project.id}`}
+          class="dossier"
+          data-reveal="fade"
+          data-reveal-delay={String((i % 2) + 1)}
+          style={`--rotation: ${rotations[i]};`}
+        >
+          <div class="dossier__tab">
+            <span class="dossier__category">{project.category}</span>
+          </div>
+          <div class="dossier__body">
+            <div class="dossier__cover">
+              <div class="dossier__image">
+                <div class="dossier__placeholder" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);">
+                  <span class="dossier__placeholder-letter">{project.title.charAt(0)}</span>
                 </div>
               </div>
-              <div class="project-card__content">
-                <span class="project-card__category">{project.category}</span>
-                <h3 class="project-card__title">{project.title}</h3>
-                <p class="project-card__description">{project.description}</p>
-                <span class="project-card__cta">
-                  Voir le projet
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </span>
-              </div>
-            </article>
-          </a>
-        ))}
-      </div>
-    </div>
-
-    <div class="portfolio__controls">
-      <button class="portfolio__arrow portfolio__arrow--prev" aria-label="Projet précédent">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <div class="portfolio__dots">
-        {projects.map((_, index) => (
-          <button
-            class={`portfolio__dot ${index === 0 ? 'is-active' : ''}`}
-            aria-label={`Aller au projet ${index + 1}`}
-            data-index={index}
-          />
-        ))}
-      </div>
-      <button class="portfolio__arrow portfolio__arrow--next" aria-label="Projet suivant">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
-      </button>
+              <h3 class="dossier__title">{project.title}</h3>
+            </div>
+            <div class="dossier__inside">
+              <p class="dossier__description">{project.description}</p>
+              <span class="dossier__cta">
+                Ouvrir le dossier
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      ))}
     </div>
   </div>
 </section>
@@ -76,46 +62,6 @@ import { projects } from '../data/projects';
 
     &__container {
       @include container;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 8px 40px rgba(47, 58, 58, 0.08);
-      padding-top: 3rem;
-      padding-bottom: 3rem;
-      position: relative;
-      @include lg {
-        padding-top: 4rem;
-        padding-bottom: 4rem;
-      }
-    }
-
-    &__tape {
-      position: absolute;
-      width: 120px;
-      height: 32px;
-      z-index: 2;
-      background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.15) 0%,
-        transparent 30%,
-        transparent 70%,
-        rgba(255, 255, 255, 0.1) 100%
-      ),
-      rgba($accent, 0.3);
-      border-top: 1px solid rgba(255, 255, 255, 0.3);
-      border-bottom: 1px solid rgba($accent, 0.15);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-
-      &--top-left {
-        top: -12px;
-        left: 28px;
-        transform: rotate(-12deg);
-      }
-
-      &--bottom-right {
-        bottom: -12px;
-        right: 28px;
-        transform: rotate(-18deg);
-      }
     }
 
     &__header {
@@ -139,145 +85,109 @@ import { projects } from '../data/projects';
       font-size: 1.125rem;
     }
 
-    &__carousel {
-      overflow: hidden;
-      margin: 0 -1.5rem;
-      padding: 0 1.5rem;
+    &__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      perspective: 1200px;
 
-      @include lg {
-        margin: 0;
-        padding: 0;
-      }
-    }
-
-    &__track {
-      display: flex;
-      gap: 1.5rem;
-      transition: transform 0.5s ease;
-
-      @include lg {
-        gap: 2rem;
-      }
-    }
-
-    &__controls {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-
-    &__arrow {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      border: 2px solid $border;
-      background: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      @include transition;
-
-      svg {
-        width: 20px;
-        height: 20px;
-        color: $text;
-      }
-
-      &:hover {
-        border-color: $primary;
-        background: $primary-light;
-
-        svg {
-          color: $primary;
-        }
-      }
-
-      &:disabled {
-        opacity: 0.4;
-        cursor: not-allowed;
-
-        &:hover {
-          border-color: $border;
-          background: white;
-
-          svg {
-            color: $text;
-          }
-        }
-      }
-    }
-
-    &__dots {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    &__dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      border: none;
-      background: $border;
-      cursor: pointer;
-      @include transition(background);
-
-      &:hover,
-      &.is-active {
-        background: $primary;
+      @include md {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem 2.5rem;
       }
     }
   }
 
-  .project-card__link-wrapper {
-    flex: 0 0 100%;
+  .dossier {
     text-decoration: none;
     color: inherit;
+    display: block;
+    position: relative;
+    transform: rotate(var(--rotation, 0deg));
+    transition: transform 0.4s ease, z-index 0s;
 
     @include md {
-      flex: 0 0 calc(50% - 1rem);
+      &:nth-child(2) { margin-top: 2rem; }
+      &:nth-child(3) { margin-top: -1rem; }
     }
 
-    @include lg {
-      flex: 0 0 calc(50% - 1rem);
-    }
+    &:hover,
+    &:focus-within,
+    &.is-open {
+      transform: rotate(0deg) scale(1.02);
+      z-index: 2;
 
-    &:nth-child(odd) .project-card {
-      transform: rotate(-0.5deg);
-    }
-
-    &:nth-child(even) .project-card {
-      transform: rotate(0.8deg);
-    }
-  }
-
-  .project-card {
-    height: 100%;
-    background: #FFFDF7;
-    border-radius: 4px;
-    overflow: hidden;
-    border: none;
-    box-shadow: 2px 3px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: box-shadow 0.3s ease;
-
-    &:hover {
-      box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.14);
-
-      .project-card__cta {
-        color: $primary;
-
-        svg {
-          transform: translateX(4px);
-        }
+      .dossier__cover {
+        transform: rotateX(-15deg) translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
       }
+
+      .dossier__inside {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .dossier__tab {
+        background: $primary;
+        color: white;
+      }
+    }
+
+    &__tab {
+      display: inline-block;
+      background: #E1E7E5;
+      padding: 0.3rem 1.2rem;
+      border-radius: 6px 6px 0 0;
+      margin-left: 1.5rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1rem;
+      font-weight: 700;
+      color: $text;
+      transition: background 0.3s ease, color 0.3s ease;
+      transform: translateY(2px);
+    }
+
+    &__body {
+      position: relative;
+      background: #FFFDF7;
+      border-radius: 2px 8px 4px 4px;
+      box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
+      min-height: 280px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(0, 0, 0, 0.015) 3px,
+          rgba(0, 0, 0, 0.015) 4px
+        );
+        pointer-events: none;
+        z-index: 1;
+        border-radius: inherit;
+      }
+    }
+
+    &__cover {
+      position: relative;
+      z-index: 2;
+      padding: 1.5rem;
+      transform-origin: top center;
+      transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+                  box-shadow 0.5s ease;
+      background: #FFFDF7;
+      border-radius: 2px 8px 4px 4px;
     }
 
     &__image {
-      aspect-ratio: 16 / 7;
+      aspect-ratio: 16 / 9;
+      border-radius: 2px;
       overflow: hidden;
+      margin-bottom: 1rem;
+      box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.08);
     }
 
     &__placeholder {
@@ -288,44 +198,35 @@ import { projects } from '../data/projects';
       justify-content: center;
     }
 
-    &__placeholder-text {
+    &__placeholder-letter {
       font-family: 'Caveat', cursive;
-      font-size: 4rem;
+      font-size: 3.5rem;
       font-weight: 700;
       color: rgba(white, 0.3);
     }
 
-    &__content {
-      padding: 1.5rem;
-
-      @include md {
-        padding: 1.75rem;
-      }
-    }
-
-    &__category {
-      display: inline-block;
-      font-family: 'Caveat', cursive;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: $primary;
-      background: none;
-      border: 2px solid $primary;
-      border-radius: 2px;
-      padding: 0.1rem 0.6rem;
-      margin-bottom: 1rem;
-      transform: rotate(-2deg);
-    }
-
     &__title {
       font-family: 'Caveat', cursive;
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.6rem;
+      color: $text;
+    }
+
+    &__inside {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 1.5rem;
+      padding-top: 0.5rem;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
+      z-index: 0;
     }
 
     &__description {
-      color: $text-light;
       font-size: 0.9rem;
+      color: $text-light;
       line-height: 1.6;
       margin-bottom: 1rem;
     }
@@ -335,10 +236,9 @@ import { projects } from '../data/projects';
       align-items: center;
       gap: 0.5rem;
       font-family: 'Caveat', cursive;
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: 700;
-      color: $text;
-      transition: color 0.3s ease;
+      color: $primary-dark;
 
       svg {
         width: 16px;
@@ -346,57 +246,25 @@ import { projects } from '../data/projects';
         transition: transform 0.3s ease;
       }
     }
+
+    &:hover .dossier__cta svg,
+    &:focus-within .dossier__cta svg,
+    &.is-open .dossier__cta svg {
+      transform: translateX(4px);
+    }
   }
 </style>
 
 <script>
-  const track = document.querySelector('.portfolio__track') as HTMLElement;
-  const cards = document.querySelectorAll('.project-card__link-wrapper');
-  const prevBtn = document.querySelector('.portfolio__arrow--prev') as HTMLButtonElement;
-  const nextBtn = document.querySelector('.portfolio__arrow--next') as HTMLButtonElement;
-  const dots = document.querySelectorAll('.portfolio__dot');
-
-  let currentIndex = 0;
-  let itemsPerView = 1;
-
-  function updateItemsPerView() {
-    if (window.innerWidth >= 768) {
-      itemsPerView = 2;
-    } else {
-      itemsPerView = 1;
-    }
-  }
-
-  function updateCarousel() {
-    const cardWidth = (cards[0] as HTMLElement).offsetWidth;
-    const gap = window.innerWidth >= 1024 ? 32 : 24;
-    track.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
-
-    dots.forEach((dot, index) => {
-      dot.classList.toggle('is-active', index === currentIndex);
+  if ('ontouchstart' in window) {
+    const dossiers = document.querySelectorAll('.dossier');
+    dossiers.forEach((dossier) => {
+      dossier.addEventListener('click', (e) => {
+        if (dossier.classList.contains('is-open')) return;
+        e.preventDefault();
+        dossiers.forEach((d) => d.classList.remove('is-open'));
+        dossier.classList.add('is-open');
+      });
     });
-
-    prevBtn.disabled = currentIndex === 0;
-    nextBtn.disabled = currentIndex >= cards.length - itemsPerView;
   }
-
-  function goTo(index: number) {
-    currentIndex = Math.max(0, Math.min(index, cards.length - itemsPerView));
-    updateCarousel();
-  }
-
-  prevBtn?.addEventListener('click', () => goTo(currentIndex - 1));
-  nextBtn?.addEventListener('click', () => goTo(currentIndex + 1));
-
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', () => goTo(index));
-  });
-
-  window.addEventListener('resize', () => {
-    updateItemsPerView();
-    updateCarousel();
-  });
-
-  updateItemsPerView();
-  updateCarousel();
 </script>

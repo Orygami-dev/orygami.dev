@@ -19,7 +19,7 @@ const testimonials = [
     role: 'Gérante',
     company: 'Boutique Élégance',
     content: 'Je suis ravie du résultat ! Le design est élégant et met parfaitement en valeur mes collections. Un vrai plus pour mon image de marque.',
-    color: '#E6F4F0',
+    color: '#C8E8DE',
   },
 ];
 
@@ -29,15 +29,15 @@ const rotations = ['-1deg', '1.5deg', '-0.5deg'];
 <section id="temoignages" class="testimonials">
   <div class="testimonials__container">
     <div class="testimonials__header">
-      <h2 class="testimonials__title">Ce qu'en disent mes clients</h2>
-      <p class="testimonials__intro">
+      <h2 class="testimonials__title" data-reveal="up">Ce qu'en disent mes clients</h2>
+      <p class="testimonials__intro" data-reveal="up" data-reveal-delay="1">
         La satisfaction de mes clients est ma plus grande fierté.
       </p>
     </div>
 
     <div class="testimonials__grid">
       {testimonials.map((testimonial, i) => (
-        <article class="testimonial-card" style={`background: ${testimonial.color}; transform: rotate(${rotations[i]});`}>
+        <article class="testimonial-card" data-reveal="fade" data-reveal-delay={String(i + 1)} style={`background: ${testimonial.color}; transform: rotate(${rotations[i]});`}>
           <p class="testimonial-card__content">"{testimonial.content}"</p>
           <div class="testimonial-card__author">
             <div class="testimonial-card__info">
@@ -58,6 +58,11 @@ const rotations = ['-1deg', '1.5deg', '-0.5deg'];
   .testimonials {
     @include section;
     background: transparent;
+    position: relative;
+    z-index: 1;
+    padding-bottom: 6rem;
+    @include md { padding-bottom: 7rem; }
+    @include lg { padding-bottom: 8rem; }
 
     &__container {
       @include container;

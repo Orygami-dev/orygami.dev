@@ -13,7 +13,7 @@ const services = [
   {
     title: 'Optimisation SEO',
     description: 'Une structure optimisée pour les moteurs de recherche afin d\'améliorer votre visibilité en ligne.',
-    color: '#E6F4F0',
+    color: '#C8E8DE',
   },
   {
     title: 'Maintenance & support',
@@ -30,15 +30,15 @@ const rotations = ['-1.5deg', '1deg', '-0.5deg', '1.5deg'];
     <div class="services__tape services__tape--top-left"></div>
     <div class="services__tape services__tape--bottom-right"></div>
     <div class="services__header">
-      <h2 class="services__title">Mes services</h2>
-      <p class="services__intro">
+      <h2 class="services__title" data-reveal="up">Mes services</h2>
+      <p class="services__intro" data-reveal="up" data-reveal-delay="1">
         Des solutions web adaptées aux besoins des PME, avec une attention particulière portée à la qualité et aux détails.
       </p>
     </div>
 
     <div class="services__grid">
       {services.map((service, i) => (
-        <div class="service-card" style={`background: ${service.color}; transform: rotate(${rotations[i]});`}>
+        <div class="service-card" data-reveal="fade" data-reveal-delay={String(i + 1)} style={`background: ${service.color}; transform: rotate(${rotations[i]});`}>
           <h3 class="service-card__title">{service.title}</h3>
           <p class="service-card__description">{service.description}</p>
         </div>

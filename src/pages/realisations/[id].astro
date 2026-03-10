@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Footer from '../../components/Footer.astro';
+import ContactCTA from '../../components/ContactCTA.astro';
 import { projects } from '../../data/projects';
 import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 
@@ -17,73 +18,88 @@ const { project } = Astro.props as Props;
 
 <Layout title={`${project.title} | Orygami.dev`} description={project.description}>
   <main class="project-detail">
-    <div class="project-detail__container">
-      <a href="/#portfolio" class="project-detail__back">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 12H5M12 19l-7-7 7-7" />
-        </svg>
-        Retour aux réalisations
-      </a>
+    <div class="project-detail__hero">
+      <div class="project-detail__hero-container">
+        <a href="/#portfolio" class="project-detail__back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7" />
+          </svg>
+          <span>Retour aux réalisations</span>
+        </a>
 
-      <div class="project-detail__header">
-        <span class="project-detail__category">{project.category}</span>
-        <h1 class="project-detail__title">{project.title}</h1>
-      </div>
-
-      <div class="screenshot-carousel">
-        <div class="screenshot-carousel__viewport">
-          <div class="screenshot-carousel__track">
-            {project.screenshots.map((src, i) => (
-              <div class="screenshot-carousel__slide">
-                <div class="screenshot-carousel__placeholder">
-                  <span class="screenshot-carousel__placeholder-text">{project.title.charAt(0)}{i + 1}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div class="project-detail__header" data-reveal="up">
+          <span class="project-detail__category">{project.category}</span>
+          <h1 class="project-detail__title">{project.title}</h1>
         </div>
-        {project.screenshots.length > 1 && (
-          <div class="screenshot-carousel__controls">
-            <button class="screenshot-carousel__arrow screenshot-carousel__arrow--prev" aria-label="Capture précédente">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <div class="screenshot-carousel__dots">
-              {project.screenshots.map((_, i) => (
-                <button
-                  class={`screenshot-carousel__dot ${i === 0 ? 'is-active' : ''}`}
-                  aria-label={`Capture ${i + 1}`}
-                  data-index={i}
-                />
+      </div>
+    </div>
+
+    <div class="project-detail__content">
+      <div class="project-detail__container">
+        <div class="screenshot-carousel" data-reveal="up">
+          <div class="screenshot-carousel__tape screenshot-carousel__tape--left"></div>
+          <div class="screenshot-carousel__tape screenshot-carousel__tape--right"></div>
+          <div class="screenshot-carousel__viewport">
+            <div class="screenshot-carousel__track">
+              {project.screenshots.map((src, i) => (
+                <div class="screenshot-carousel__slide">
+                  <div class="screenshot-carousel__placeholder">
+                    <span class="screenshot-carousel__placeholder-text">{project.title.charAt(0)}{i + 1}</span>
+                  </div>
+                </div>
               ))}
             </div>
-            <button class="screenshot-carousel__arrow screenshot-carousel__arrow--next" aria-label="Capture suivante">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </button>
           </div>
-        )}
-      </div>
+          {project.screenshots.length > 1 && (
+            <div class="screenshot-carousel__controls">
+              <button class="screenshot-carousel__arrow screenshot-carousel__arrow--prev" aria-label="Capture précédente">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div class="screenshot-carousel__dots">
+                {project.screenshots.map((_, i) => (
+                  <button
+                    class={`screenshot-carousel__dot ${i === 0 ? 'is-active' : ''}`}
+                    aria-label={`Capture ${i + 1}`}
+                    data-index={i}
+                  />
+                ))}
+              </div>
+              <button class="screenshot-carousel__arrow screenshot-carousel__arrow--next" aria-label="Capture suivante">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          )}
+        </div>
 
-      <div class="project-detail__body">
-        <section class="project-detail__mission">
-          <h2>La mission</h2>
-          <p>{project.longDescription}</p>
-        </section>
+        <div class="project-detail__body" data-reveal="up" data-reveal-delay="1">
+          <section class="project-detail__mission">
+            <h2 class="project-detail__mission-title">
+              <span class="project-detail__mission-number">01</span>
+              La mission
+            </h2>
+            <p>{project.longDescription}</p>
+          </section>
 
-        <div class="project-detail__actions">
-          <a href={project.siteUrl} target="_blank" rel="noopener noreferrer" class="project-detail__site-link">
-            Voir le site
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
-            </svg>
-          </a>
+          <div class="project-detail__actions">
+            <a href={project.siteUrl} target="_blank" rel="noopener noreferrer" class="project-detail__site-link">
+              Voir le site
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3" />
+              </svg>
+            </a>
+            <a href="/#portfolio" class="project-detail__other-link">
+              Voir d'autres projets
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </main>
+  <ContactCTA overlap={false} />
   <Footer />
 </Layout>
 
@@ -92,12 +108,33 @@ const { project } = Astro.props as Props;
   @use '../../styles/mixins' as *;
 
   .project-detail {
-    @include section;
-    background: $background;
+    &__hero {
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(95, 179, 162, 0.07) 39px,
+          rgba(95, 179, 162, 0.07) 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 39px,
+          rgba(95, 179, 162, 0.07) 39px,
+          rgba(95, 179, 162, 0.07) 40px
+        ),
+        linear-gradient(180deg, $background 0%, $primary-light 100%);
+      padding: 2rem 0 3rem;
 
-    &__container {
+      @include md {
+        padding: 3rem 0 4rem;
+      }
+    }
+
+    &__hero-container {
       @include container;
-      max-width: 800px;
+      max-width: 900px;
     }
 
     &__back {
@@ -106,7 +143,9 @@ const { project } = Astro.props as Props;
       gap: 0.5rem;
       color: $text-light;
       text-decoration: none;
-      font-weight: 500;
+      font-family: 'Caveat', cursive;
+      font-size: 1.2rem;
+      font-weight: 700;
       margin-bottom: 2rem;
       @include transition;
 
@@ -121,35 +160,75 @@ const { project } = Astro.props as Props;
     }
 
     &__header {
-      margin-bottom: 2rem;
+      margin-bottom: 0;
     }
 
     &__category {
       display: inline-block;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: $primary;
-      background: $primary-light;
-      padding: 0.3rem 0.85rem;
-      border-radius: 20px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: $primary-dark;
+      background: rgba($primary, 0.12);
+      padding: 0.25rem 1rem;
+      border-radius: 2px;
       margin-bottom: 1rem;
+      transform: rotate(-1deg);
     }
 
     &__title {
-      font-size: 2rem;
+      font-family: 'Caveat', cursive;
+      font-size: 2.5rem;
       line-height: 1.2;
 
       @include md {
-        font-size: 2.5rem;
+        font-size: 3.5rem;
       }
     }
 
+    &__content {
+      background:
+        radial-gradient(circle, rgba($primary, 0.08) 1px, transparent 1px) 0 0 / 24px 24px,
+        white;
+      padding: 3rem 0 4rem;
+
+      @include md {
+        padding: 4rem 0 5rem;
+      }
+    }
+
+    &__container {
+      @include container;
+      max-width: 900px;
+    }
+
     &__body {
-      background: white;
-      border-radius: 16px;
-      border: 1px solid $border;
+      background: #FFFDF7;
+      border-radius: 2px 8px 4px 4px;
+      box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
       padding: 2rem;
-      @include shadow-soft;
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 3px,
+          rgba(0, 0, 0, 0.015) 3px,
+          rgba(0, 0, 0, 0.015) 4px
+        );
+        pointer-events: none;
+        z-index: 0;
+        border-radius: inherit;
+      }
+
+      > * {
+        position: relative;
+        z-index: 1;
+      }
 
       @include md {
         padding: 3rem;
@@ -159,11 +238,6 @@ const { project } = Astro.props as Props;
     &__mission {
       margin-bottom: 2rem;
 
-      h2 {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-      }
-
       p {
         color: $text-light;
         line-height: 1.8;
@@ -171,9 +245,42 @@ const { project } = Astro.props as Props;
       }
     }
 
+    &__mission-title {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: underline wavy $primary;
+      text-underline-offset: 4px;
+      text-decoration-thickness: 1.5px;
+    }
+
+    &__mission-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $primary;
+      border: 2.5px solid $primary;
+      border-radius: 50%;
+      transform: rotate(-3deg);
+      flex-shrink: 0;
+      text-decoration: none;
+    }
+
     &__actions {
       padding-top: 2rem;
-      border-top: 1px solid $border;
+      border-top: 2px dashed rgba($primary, 0.2);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
     }
 
     &__site-link {
@@ -184,15 +291,50 @@ const { project } = Astro.props as Props;
         height: 18px;
       }
     }
+
+    &__other-link {
+      @include button-secondary;
+    }
   }
 
   .screenshot-carousel {
     margin-bottom: 3rem;
+    position: relative;
+
+    &__tape {
+      position: absolute;
+      width: 100px;
+      height: 28px;
+      z-index: 10;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        transparent 30%,
+        transparent 70%,
+        rgba(255, 255, 255, 0.1) 100%
+      ),
+      rgba($accent, 0.3);
+      border-top: 1px solid rgba(255, 255, 255, 0.3);
+      border-bottom: 1px solid rgba($accent, 0.15);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+
+      &--left {
+        top: -10px;
+        left: 20px;
+        transform: rotate(-12deg);
+      }
+
+      &--right {
+        top: -10px;
+        right: 20px;
+        transform: rotate(8deg);
+      }
+    }
 
     &__viewport {
-      border-radius: 16px;
+      border-radius: 2px;
       overflow: hidden;
-      @include shadow-soft;
+      box-shadow: 3px 5px 16px rgba(0, 0, 0, 0.12);
     }
 
     &__track {
@@ -215,6 +357,7 @@ const { project } = Astro.props as Props;
     }
 
     &__placeholder-text {
+      font-family: 'Caveat', cursive;
       font-size: 4rem;
       font-weight: 700;
       color: rgba(white, 0.3);
@@ -252,7 +395,7 @@ const { project } = Astro.props as Props;
 
       &:hover {
         border-color: $primary;
-        background: $primary-light;
+        background: rgba($primary, 0.08);
 
         svg {
           color: $primary;
